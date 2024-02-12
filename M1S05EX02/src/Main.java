@@ -23,7 +23,6 @@ public class Main {
                 System.out.print  ("Selecione uma opção: "     );
 
                 optionSelected = scan.nextInt();
-                scan.nextLine();
 
                 switch (optionSelected) {
                     case 1:
