@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
-
+        Game gameStart = new Game();
 
         try {
             int optionSelected;
@@ -29,7 +29,7 @@ public class Main {
 
                 switch (optionSelected) {
                     case 1:
-                        newGame(scan);
+                        newGame(scan, gameStart);
                         break;
                     case 0:
                         System.out.println("Obrigado volte sempre. Aplicação finalizada com sucesso!");
@@ -46,9 +46,7 @@ public class Main {
 
     }
 
-    public static void newGame(Scanner scan) {
-
-        Game gameStart = new Game();
+    public static void newGame(Scanner scan, Game gameStart) {
 
         int optionSelected;
 
@@ -57,6 +55,7 @@ public class Main {
             System.out.println("+         Seja Bem Vindo         +");
             System.out.println("+--------------------------------+");
             System.out.println("| (1) - Informar Jogador         |");
+            System.out.println("| (2) - final do game            |");
             System.out.println("+--------------------------------+");
             System.out.println("| (0) - Sair do jogo             |");
             System.out.println("+--------------------------------+");
@@ -67,6 +66,10 @@ public class Main {
             switch (optionSelected) {
                 case 1:
                     loginPlayer(gameStart, scan);
+                    break;
+                case 2:
+//                    por enquanto sendo usado como opção 2 enquanto não tem game de verdade criado
+                    finishMiniGame(gameStart);
                     break;
                 case 0:
                     System.out.println("Saindo do jogo...");
@@ -94,13 +97,15 @@ public class Main {
             player = new Player(namePlayer, agePlayer);
         }
 
+        gameStart.setNameLogged(player.getName());
+
         gameStart.newPlayer(player);
 
+    }
+
+    public static void finishMiniGame(Game gameStart) {
         System.out.println("\n+-----------------------------+");
-
         gameStart.showTopPlayers();
-
         System.out.println("+-----------------------------+\n");
-
     }
 }
