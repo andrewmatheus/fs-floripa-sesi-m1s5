@@ -1,7 +1,7 @@
 public class Player {
     /*
-    * Attributes
-    * */
+     * Attributes
+     * */
     private String name;
     private int age;
     private double punctuation;
