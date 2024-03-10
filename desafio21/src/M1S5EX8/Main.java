@@ -197,10 +197,12 @@ public class Main {
                 System.out.println("\nJOGADOR: " + gameStart.getNameLogged());
                 System.out.println("+--------------------------------+");
                 System.out.println("|                                |");
-                System.out.println("| (1) - Jogar novamente?         |");
+                System.out.println("| (1) - Ver Ranking              |");
+                System.out.println("| (2) - Ver Top 10               |");
+                System.out.println("| (3) - Jogar novamente          |");
                 System.out.println("|                                |");
                 System.out.println("+--------------------------------+");
-                System.out.println("| (0) - Encerrar jogo            |");
+                System.out.println("| (0) - Encerrar o jogo          |");
                 System.out.println("+--------------------------------+");
                 System.out.print("Selecione uma opção: ");
 
@@ -208,6 +210,12 @@ public class Main {
 
                 switch (optionSelected) {
                     case 1:
+                        rankingAll(gameStart);
+                        break;
+                    case 2:
+                        rankingTop10(gameStart);
+                        break;
+                    case 3:
                         System.out.println("Olá, seja bem vindo ao sexto sentido!");
                         System.out.println("Será que você consegue advinhar qual número foi o escolhido?");
                         System.out.println("Vamos deixar você definir um limite.");
@@ -253,10 +261,12 @@ public class Main {
                 System.out.println("\nJOGADOR: " + gameStart.getNameLogged());
                 System.out.println("+--------------------------------+");
                 System.out.println("|                                |");
-                System.out.println("| (1) - Jogar novamente?         |");
+                System.out.println("| (1) - Ver Ranking              |");
+                System.out.println("| (2) - Ver Top 10               |");
+                System.out.println("| (3) - Jogar novamente          |");
                 System.out.println("|                                |");
                 System.out.println("+--------------------------------+");
-                System.out.println("| (0) - Encerrar jogo            |");
+                System.out.println("| (0) - Encerrar o jogo          |");
                 System.out.println("+--------------------------------+");
                 System.out.print("Selecione uma opção: ");
 
@@ -264,6 +274,12 @@ public class Main {
 
                 switch (optionSelected) {
                     case 1:
+                        rankingAll(gameStart);
+                        break;
+                    case 2:
+                        rankingTop10(gameStart);
+                        break;
+                    case 3:
                         System.out.println("Informe sua jogada: \"pedra\", \"papel\", \"tesoura\"");
                         attempt = scan.next().trim().toLowerCase();
 
@@ -287,9 +303,15 @@ public class Main {
         }
     }
 
-    public static void finishMiniGame(Game gameStart) {
+    public static void rankingAll(Game gameStart) {
         System.out.println("\n+-----------------------------+");
         gameStart.showTopPlayers();
+        System.out.println("+-----------------------------+\n");
+    }
+
+    public static void rankingTop10(Game gameStart) {
+        System.out.println("\n+-----------------------------+");
+        gameStart.showTop10Players();
         System.out.println("+-----------------------------+\n");
     }
 }

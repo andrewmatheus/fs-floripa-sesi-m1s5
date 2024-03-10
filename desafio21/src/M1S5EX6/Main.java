@@ -57,7 +57,7 @@ public class Main {
             System.out.println("+         Seja Bem Vindo         +");
             System.out.println("+--------------------------------+");
             System.out.println("| (1) - Novo Jogador             |");
-            System.out.println("| (2) - final do game            |");
+            System.out.println("| (2) - Selecionar Mini Game     |");
             System.out.println("+--------------------------------+");
             System.out.println("| (0) - Sair do jogo             |");
             System.out.println("+--------------------------------+");
@@ -67,11 +67,10 @@ public class Main {
 
             switch (optionSelected) {
                 case 1:
-                    loginPlayer(gameStart, scan);
+                    newPlayer(gameStart, scan);
                     break;
                 case 2:
-//                    por enquanto sendo usado como opção 2 enquanto não tem game de verdade criado
-                    finishMiniGame(gameStart);
+                    selectedMiniGame(gameStart, scan);
                     break;
                 case 0:
                     System.out.println("Saindo do jogo...");
@@ -84,7 +83,7 @@ public class Main {
 
     }
 
-    public static void loginPlayer(Game gameStart, Scanner scan) {
+    public static void newPlayer(Game gameStart, Scanner scan) {
         System.out.println("Digite o seu nome ou apelido: ");
         String namePlayer = scan.next();
 
@@ -108,6 +107,126 @@ public class Main {
 
         gameStart.newPlayer(player);
 
+    }
+
+    public static void menuPlayer(Game gameStart, Scanner scan, Player player) {
+
+        try {
+            int optionSelected;
+            do {
+                System.out.println("\nJOGADOR: " + gameStart.getNameLogged());
+                System.out.println("+--------------------------------+");
+                System.out.println("+ Qual Jogo deseja jogar?        +");
+                System.out.println("+--------------------------------+");
+                System.out.println("|                                |");
+                System.out.println("| (1) - Pedra, Papel e Tesoura   |");
+                System.out.println("| (2) - Sexto Sentido            |");
+                System.out.println("|                                |");
+                System.out.println("+--------------------------------+");
+                System.out.println("| (0) - Voltar ao menu anterior  |");
+                System.out.println("+--------------------------------+");
+                System.out.print("Selecione uma opção: ");
+
+                optionSelected = scan.nextInt();
+
+                switch (optionSelected) {
+                    case 1:
+                        menuGameOne(gameStart, player, scan);
+                        break;
+                    case 2:
+                        System.out.println("Opção Sexto Sentido!");
+                        break;
+                    case 0:
+                        System.out.println("Deslogado com sucesso!");
+                        break;
+                    default:
+                        System.out.println("Opção selecionada não é válida. Voltando ao menu principal...");
+                }
+            } while (optionSelected != 0);
+
+        } catch (Exception exception) {
+            System.out.println("Opção informada não é válida. Informe um número de acordo com menu.");
+        }
+    }
+
+    public static void selectedMiniGame (Game gameStart, Scanner scan) {
+        Player player;
+
+        System.out.println("Olá, seja bem vindo!");
+        System.out.println("Informe seu nome para acessar: ");
+        String name = scan.next().trim();
+        while (name.length() <= 3) {
+            System.out.println("Informe um nome ou apelido válido! Informe acima de 3 letras.");
+            System.out.println("Informe seu nome para acessar: ");
+            name = scan.next().trim();
+        }
+
+        if (gameStart.checkPlayerExists(name)) {
+           player = gameStart.getExistingPlayer(name);
+        } else {
+            System.out.println("Informe sua idade: ");
+            int agePlayer = scan.nextInt();
+
+            player = new Player(name, agePlayer);
+        }
+
+        gameStart.setNameLogged(player.getName());
+
+        gameStart.newPlayer(player);
+
+        menuPlayer(gameStart, scan, player);
+    }
+
+    public static void menuGameOne(Game gameStart, Player player, Scanner scan) {
+        System.out.println("Informe sua jogada: \"pedra\", \"papel\", \"tesoura\"");
+        String attempt = scan.next().trim().toLowerCase();
+
+        while (!attempt.equals("pedra") && !attempt.equals("papel") && !attempt.equals("tesoura")) {
+            System.out.println("Informe uma jogada válida. Opções: \"pedra\", \"papel\", \"tesoura\"");
+            attempt = scan.next().trim().toLowerCase();
+        }
+
+
+        gameStart.gameRockPaperScissors(player, attempt);
+
+        try {
+            int optionSelected;
+            do {
+                System.out.println("\nJOGADOR: " + gameStart.getNameLogged());
+                System.out.println("+--------------------------------+");
+                System.out.println("|                                |");
+                System.out.println("| (1) - Jogar novamente?         |");
+                System.out.println("|                                |");
+                System.out.println("+--------------------------------+");
+                System.out.println("| (0) - Encerrar jogo            |");
+                System.out.println("+--------------------------------+");
+                System.out.print("Selecione uma opção: ");
+
+                optionSelected = scan.nextInt();
+
+                switch (optionSelected) {
+                    case 1:
+                        System.out.println("Informe sua jogada: \"pedra\", \"papel\", \"tesoura\"");
+                        attempt = scan.next().trim().toLowerCase();
+
+                        while (!attempt.equals("pedra") && !attempt.equals("papel") && !attempt.equals("tesoura")) {
+                            System.out.println("Informe uma jogada válida. Opções: \"pedra\", \"papel\", \"tesoura\"");
+                            attempt = scan.next().trim().toLowerCase();
+                        }
+
+                        gameStart.gameRockPaperScissors(player, attempt);
+                        break;
+                    case 0:
+                        System.out.println("Deslogado com sucesso!");
+                        break;
+                    default:
+                        System.out.println("Opção selecionada não é válida. Voltando ao menu principal...");
+                }
+            } while (optionSelected != 0);
+
+        } catch (Exception exception) {
+            System.out.println("Opção informada não é válida. Informe um número de acordo com menu.");
+        }
     }
 
     public static void finishMiniGame(Game gameStart) {

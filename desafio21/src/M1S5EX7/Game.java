@@ -1,9 +1,6 @@
 package M1S5EX7;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Game {
     // <editor-fold desc="Attributes">
@@ -99,8 +96,8 @@ public class Game {
 
     }
 
-    // método jogar()
-    public void gameRockPaperScissors(Player player, String attempt) {
+    // método jogar pedra papel tesoura()
+    public void toPlayer(Player player, String attempt) {
         System.out.println("Rodada: " + getNumberOfGames());
 
         Random random = new Random();
@@ -121,6 +118,33 @@ public class Game {
         } else {
             player.losePoints(5);
             System.out.println("Ops! Você perdeu.");
+        }
+
+        player.addAttempt();
+        setNumberOfGames(getNumberOfGames() + 1);
+
+        if (bestPlayer == null || player.getPunctuation() > bestPlayer.getPunctuation()) {
+            bestPlayer = player;
+        }
+
+        System.out.println("Melhor jogador rankeado até o momento: " + bestPlayer.getName() + ", com a pontuação: " + bestPlayer.getPunctuation());
+    }
+
+    // método jogar sexto sentido()
+    public void toPlayer(Player player, int guessedNumber, Scanner scan) {
+        System.out.println("Rodada: " + getNumberOfGames());
+
+        System.out.println("Escolha um número de 0 até " + guessedNumber + ":");
+        int escolha = scan.nextInt();
+
+        int numberRound = (int) (Math.random() * (guessedNumber + 1));
+
+        if (escolha == numberRound) {
+            System.out.println("Parabéns! Você acertou e ganhou um ponto.");
+            player.addPoints(1);
+        } else {
+            System.out.println("Você errou. O número correto era: " + numberRound);
+            player.losePoints(1);
         }
 
         player.addAttempt();

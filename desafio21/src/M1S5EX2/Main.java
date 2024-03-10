@@ -48,7 +48,7 @@ public class Main {
 
     public static void addPlayer(Scanner scan) {
         System.out.println("Digite o seu nome ou apelido: ");
-        String namePlayer = scan.nextLine();
+        String namePlayer = scan.next();
 
         System.out.println("Informe sua idade: ");
         int agePlayer = scan.nextInt();

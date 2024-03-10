@@ -130,10 +130,10 @@ public class Main {
 
                 switch (optionSelected) {
                     case 1:
-                        menuGameOne(gameStart, player, scan);
+                        gameRockPaperScissors(gameStart, player, scan);
                         break;
                     case 2:
-                        System.out.println("Opção Sexto Sentido!");
+                        sixthSense(gameStart, player, scan);
                         break;
                     case 0:
                         System.out.println("Deslogado com sucesso!");
@@ -176,7 +176,66 @@ public class Main {
         menuPlayer(gameStart, scan, player);
     }
 
-    public static void menuGameOne(Game gameStart, Player player, Scanner scan) {
+    public static void sixthSense(Game gameStart, Player player, Scanner scan) {
+        System.out.println("Olá, seja bem vindo ao sexto sentido!");
+        System.out.println("Será que você consegue advinhar qual número foi o escolhido?");
+        System.out.println("Vamos deixar você definir um limite.");
+        System.out.println("exemplo: 100 e iremos selecionar um número entre 0 e 100, quanto maior o número maior o desafio. Vamos começar?");
+        System.out.println("\nQual número limite você escolheu?");
+        int numberChallenge = scan.nextInt();
+
+        while (numberChallenge <= 0) {
+            System.out.println("Informe um número maior que 0 para que possamos criar o desafio! Exemplo: 10");
+            numberChallenge = scan.nextInt();
+        }
+
+        gameStart.toPlayer(player, numberChallenge, scan);
+
+        try {
+            int optionSelected;
+            do {
+                System.out.println("\nJOGADOR: " + gameStart.getNameLogged());
+                System.out.println("+--------------------------------+");
+                System.out.println("|                                |");
+                System.out.println("| (1) - Jogar novamente?         |");
+                System.out.println("|                                |");
+                System.out.println("+--------------------------------+");
+                System.out.println("| (0) - Encerrar jogo            |");
+                System.out.println("+--------------------------------+");
+                System.out.print("Selecione uma opção: ");
+
+                optionSelected = scan.nextInt();
+
+                switch (optionSelected) {
+                    case 1:
+                        System.out.println("Olá, seja bem vindo ao sexto sentido!");
+                        System.out.println("Será que você consegue advinhar qual número foi o escolhido?");
+                        System.out.println("Vamos deixar você definir um limite.");
+                        System.out.println("exemplo: 100 e iremos selecionar um número entre 0 e 100, quanto maior o número maior o desafio. Vamos começar?");
+                        System.out.println("\nQual número limite você escolheu?");
+                        numberChallenge = scan.nextInt();
+
+                        while (numberChallenge <= 0) {
+                            System.out.println("Informe um número maior que 0 para que possamos criar o desafio! Exemplo: 10");
+                            numberChallenge = scan.nextInt();
+                        }
+
+                        gameStart.toPlayer(player, numberChallenge, scan);
+                        break;
+                    case 0:
+                        System.out.println("Deslogado com sucesso!");
+                        break;
+                    default:
+                        System.out.println("Opção selecionada não é válida. Voltando ao menu principal...");
+                }
+            } while (optionSelected != 0);
+
+        } catch (Exception exception) {
+            System.out.println("Opção informada não é válida. Informe um número de acordo com menu.");
+        }
+    }
+
+    public static void gameRockPaperScissors(Game gameStart, Player player, Scanner scan) {
         System.out.println("Informe sua jogada: \"pedra\", \"papel\", \"tesoura\"");
         String attempt = scan.next().trim().toLowerCase();
 
@@ -186,7 +245,7 @@ public class Main {
         }
 
 
-        gameStart.gameRockPaperScissors(player, attempt);
+        gameStart.toPlayer(player, attempt);
 
         try {
             int optionSelected;
@@ -213,7 +272,7 @@ public class Main {
                             attempt = scan.next().trim().toLowerCase();
                         }
 
-                        gameStart.gameRockPaperScissors(player, attempt);
+                        gameStart.toPlayer(player, attempt);
                         break;
                     case 0:
                         System.out.println("Deslogado com sucesso!");

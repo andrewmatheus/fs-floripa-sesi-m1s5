@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Game {
     // <editor-fold desc="Attributes">
-    private List<Player> listOfPlayers;
+    private final List<Player> listOfPlayers;
     private List<Player> rankingPlayers;
     private String nameLogged;
     private Player bestPlayer;
@@ -71,7 +71,7 @@ public class Game {
         this.listOfPlayers.sort(Comparator.comparingDouble(Player::getPunctuation).reversed());
 
         // Atualiza a lista de melhores jogadores com os top N (por exemplo, top 10)
-        int topN = 10;
+        int topN = 100;
         this.rankingPlayers = new ArrayList<>(listOfPlayers.subList(0, Math.min(topN, listOfPlayers.size())));
     }
 
@@ -94,6 +94,29 @@ public class Game {
             System.out.println("Tente novamente " + this.nameLogged + ", você terminou fora do ranking.");
         }
 
+    }
+
+    public void showTop10Players() {
+        System.out.println("Top 10 Jogadores:");
+
+        int position = -1;
+        int topPlayersCount = Math.min(10, this.rankingPlayers.size()); // Limita ao top 10
+
+        for (int contList = 0; contList < topPlayersCount; contList++) {
+            Player player = this.rankingPlayers.get(contList);
+            System.out.println("Nome do jogador: " + player.getName() + " - Posição: " + (contList + 1) + "º" + " - Pontuação: " + player.getPunctuation());
+
+            if (player.getName().equals(this.nameLogged)) {
+                position = (contList + 1);
+            }
+        }
+
+        System.out.println("-------------------------------");
+        if (position > 0) {
+            System.out.println("Parabéns " + this.nameLogged + " você terminou na posição: " + position);
+        } else {
+            System.out.println("Tente novamente " + this.nameLogged + ", você terminou fora do ranking.");
+        }
     }
 
     // método jogar pedra papel tesoura()
@@ -122,6 +145,7 @@ public class Game {
 
         player.addAttempt();
         setNumberOfGames(getNumberOfGames() + 1);
+        this.updateRanking();
 
         if (bestPlayer == null || player.getPunctuation() > bestPlayer.getPunctuation()) {
             bestPlayer = player;
@@ -149,6 +173,7 @@ public class Game {
 
         player.addAttempt();
         setNumberOfGames(getNumberOfGames() + 1);
+        this.updateRanking();
 
         if (bestPlayer == null || player.getPunctuation() > bestPlayer.getPunctuation()) {
             bestPlayer = player;

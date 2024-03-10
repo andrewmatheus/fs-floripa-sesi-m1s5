@@ -3,23 +3,40 @@ package M1S5EX6;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class Game {
     // <editor-fold desc="Attributes">
     private List<Player> listOfPlayers;
     private List<Player> rankingPlayers;
-
     private String nameLogged;
+    private Player bestPlayer;
+    private int numberOfGames;
+    // </editor-fold>
 
     // <editor-fold desc="Constructor">
     public Game() {
         this.listOfPlayers = new ArrayList<>();
         this.rankingPlayers = new ArrayList<>();
         this.nameLogged = "";
+        this.bestPlayer = null;
+        this.numberOfGames = 0;
     }
     // </editor-fold>
 
     // <editor-fold desc="methods">
+
+    public Player getBestPlayer() {
+        return bestPlayer;
+    }
+
+    public int getNumberOfGames() {
+        return numberOfGames;
+    }
+
+    public void setNumberOfGames(int numberOfGames) {
+        this.numberOfGames = numberOfGames;
+    }
 
     public String getNameLogged() {
         return nameLogged;
@@ -80,6 +97,40 @@ public class Game {
             System.out.println("Tente novamente " + this.nameLogged + ", você terminou fora do ranking.");
         }
 
+    }
+
+    // método jogar()
+    public void gameRockPaperScissors(Player player, String attempt) {
+        System.out.println("Rodada: " + getNumberOfGames());
+
+        Random random = new Random();
+        String[] options = {"pedra", "papel", "tesoura"};
+        String playComputer = options[random.nextInt(options.length)];
+
+        System.out.println("\nJogador " + player.getName() + " escolheu: " + attempt);
+        System.out.println("Computador escolheu: " + playComputer);
+
+        if (attempt.equals(playComputer)) {
+            player.addPoints(1);
+            System.out.println("Empate!");
+        } else if ((attempt.equals("pedra") && playComputer.equals("tesoura")) ||
+                (attempt.equals("papel") && playComputer.equals("pedra")) ||
+                (attempt.equals("tesoura") && playComputer.equals("papel"))) {
+            System.out.println("Parabéns! Você ganhou a partida.");
+            player.addPoints(10);
+        } else {
+            player.losePoints(5);
+            System.out.println("Ops! Você perdeu.");
+        }
+
+        player.addAttempt();
+        setNumberOfGames(getNumberOfGames() + 1);
+
+        if (bestPlayer == null || player.getPunctuation() > bestPlayer.getPunctuation()) {
+            bestPlayer = player;
+        }
+
+        System.out.println("Melhor jogador rankeado até o momento: " + bestPlayer.getName() + ", com a pontuação: " + bestPlayer.getPunctuation());
     }
 
     // </editor-fold>
